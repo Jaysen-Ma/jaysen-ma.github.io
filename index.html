@@ -4,14 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Jaysen Ma</title>
-  <meta name="description" content="Jaysen Ma: AI/ML research engineer with experience in machine learning research, post-training, evaluation and AI safety. Oxford MPhys, former quantitative researcher.">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header class="site-header">
   <div class="wrap">
     <h1>Jaysen Ma</h1>
-    <p class="subtitle">AI/ML Research Engineer &middot; machine learning research, model training and evaluation</p>
+    <p class="subtitle">Seeking AI/ML research engineering roles. Oxford MPhys and former quantitative researcher.</p>
     <nav>
       <a href="#about">About</a>
       <a href="#research">Research</a>
@@ -24,8 +23,8 @@
 
 <section id="about">
   <h2>About</h2>
-  <p>I'm Jaysen Ma. I studied physics at the University of Oxford, graduating in 2023 with a four-year integrated Master of Physics (MPhys), and then worked in quantitative research, building and deploying machine learning for systematic trading.</p>
-  <p>I'm interested in AI/ML research and engineering, including model training, evaluation and applied machine learning. My recent projects include work on AI safety, red-teaming and the side effects of post-training; these are part of my broader interest in understanding and improving machine learning systems. I like questions that can be answered with a careful experiment, and I try to report the limitations of my results as plainly as the results themselves. The projects below are written up in public repositories, with the code needed to reproduce them.</p>
+  <p>I graduated from the University of Oxford in 2023 with a four-year integrated Master of Physics (MPhys), then worked in quantitative research, building and deploying machine-learning trading algorithms.</p>
+  <p>I'm interested in AI/ML research and engineering, including AI safety, agent orchestration, model design and training, and evaluation. My recent projects examine red-teaming and the side effects of post-training. Feedback and comments are welcome.</p>
 </section>
 
 <section id="research">
@@ -34,21 +33,21 @@
   <article class="project">
     <h3>CoT Injection: red-teaming Muse Glimmer's reasoning channel</h3>
     <p class="links"><a href="https://github.com/Jaysen-Ma/muse-cot-injection">github.com/Jaysen-Ma/muse-cot-injection</a></p>
-    <p>Muse Glimmer 30B, an open-weights reasoning model, deliberates in a private reasoning channel before it answers. I tested what happens when something other than the model (an orchestrator, an agent framework, another model in a pipeline, or an API that accepts reasoning prefill) writes into that channel. An auxiliary model wrote a short, fabricated chain of thought in the target's own style, concluding that a harmful request could be answered, and this was injected as the model's own reasoning. On 200 StrongREJECT prompts, compliance rose from 0.5% with the plain prompt to 69.5% with reasoning-channel injection. The identical text pasted into an ordinary user message gave only 1.0%, so the attack depends on write access to the reasoning channel rather than on anything an end user can type. The risk sits with systems that construct or relay a model's reasoning.</p>
-    <p>I then trained a LoRA defence (rank 16) on 104 corrective examples written by the target model itself, using only the training categories. Attack success fell to less than 1% overall and on two held-out harm categories (from 76.3% there before the defence), and the defended model still answered 20/20 benign prompts in normal use. The defence is blunt rather than selective: when harmless reasoning was injected into harmless prompts, it answered only 7/20, so part of that drop reflects a reflex against any injected reasoning. The README sets out this and other caveats (one fabrication style, one judge, one seed) and the next steps. No harmful prompts or model outputs are published; the public results are counts only.</p>
+    <p>Muse Glimmer 30B, an open-weights reasoning model by Meta, deliberates in a private reasoning channel before it answers. I tested what happens when something other than the model (e.g. an orchestrator) writes into that channel. An auxiliary model (Gemma 4 31B-it) wrote a fabricated chain of thought in the target's own style, concluding that a harmful request could be answered, and this was injected as the model's (Muse Glimmer) own reasoning. On 200 StrongREJECT prompts, compliance rose from 0.5% with the plain prompt to 69.5% with reasoning-channel injection. The identical text pasted into an ordinary user message gave only 1.0%, so the attack depends on write access to the reasoning channel. The risk sits with systems that construct a model's reasoning.</p>
+    <p>I then trained a LoRA defence on 104 corrective examples written by the target model itself. Attack success fell to less than 1% both overall and on two held-out harm categories, from 76.3% on those categories before the defence. When harmless reasoning was injected into harmless prompts, the model answered only 7 out of 20, so part of that drop reflects a reflex against any injected reasoning. Training the LoRA on mixed data rather than refusal-only data could improve this.</p>
   </article>
 
   <article class="project">
     <h3>What post-training changes: reasoning gains and safety side effects of ES vs RL</h3>
     <p class="links"><a href="https://github.com/Jaysen-Ma/es-vs-rl-post-training">github.com/Jaysen-Ma/es-vs-rl-post-training</a></p>
     <p>RL with verifiable rewards tends to raise pass@1 on maths while narrowing the base model's pass@k ceiling. I asked whether backprop-free evolution strategies (ES) avoid that narrowing, and whether maths-only post-training shifts moral judgements. I trained Qwen2.5-1.5B and 7B with ES on the same 8,523 problems as the public SimpleRL-Zoo GRPO checkpoints and compared base, ES and GRPO models at pass@k up to 512 on AIME24, MATH500, Minerva Math and OlympiadBench. At 1.5B neither method narrowed the ceiling. At 7B, GRPO led at small k but ended below base on all four benchmarks, while ES finished at or above base on three of four.</p>
-    <p>On the safety side, neither method changed MMLU (all within 0.5 points of base), but at 7B maths-only ES lowered ETHICS commonsense accuracy from 63.4% to 57.7%, while GRPO left it unchanged. The point is that capability and moral judgement can move separately, and a capability check alone can miss the change. These are single runs per method, not compute-matched, and the write-up lists those limitations alongside the results.</p>
+    <p>On the safety side, neither method changed MMLU (all within 0.5 points of base), but at 7B maths-only ES lowered ETHICS commonsense accuracy from 63.4% to 57.7%, while GRPO left it unchanged. The point is that capability and moral judgement can move separately, and a capability check alone can miss the change. These are single runs per method, not compute-matched (not GPU rich yet), and the write-up lists those limitations alongside the results.</p>
   </article>
 
   <article class="project">
     <h3>The grammar of physics is branch-dependent: evidence from the Feynman Lectures</h3>
     <p class="links"><a href="https://github.com/Jaysen-Ma/physics-metalaw">github.com/Jaysen-Ma/physics-metalaw</a></p>
-    <p>Prior work found that operator frequencies in the equations of physics follow an exponential rank law with a decay rate &beta; near 0.34, but with a lower value for inflaton potentials. I estimated &beta; directly by maximum likelihood, confirmed that gap, and ruled out two suggested explanations (unit conventions and Lagrangian form). To test the remaining one within a single source, I extracted every closed-form equation in the Feynman Lectures on Physics, Vol. I&ndash;III, giving 1,016 expressions after deduplication, each checked by hand against the source. A single &beta; for all of physics is rejected: branch-specific values fit substantially better (likelihood ratio 102.1 on 6 degrees of freedom), with quantum mechanics low and thermodynamics and fluid mechanics high. The project includes a browsable formula ledger with provenance for every expression. The write-up is still being revised, so numbers may change.</p>
+    <p>Prior work found that the frequencies of operators in physics equations follow an exponential rank law, described by a decay rate &beta;. I re-estimated &beta; with maximum likelihood, reproduced the lower value in single-field slow-roll inflationary potentials, and found that &beta; is not a universal constant across physics: the operator-frequency law varies systematically by branch. This offers a structural explanation for the gap between inflationary potentials and the textbook corpora. To establish this, I extracted 1,016 closed-form expressions from the Feynman Lectures on Physics (Vol. I&ndash;III) and labelled them across seven branches. Within this corpus, a branch-specific &beta; fits substantially better than a model with one shared &beta; (likelihood-ratio statistic of 102.1, with 6 degrees of freedom). The project includes a browsable formula ledger with provenance for every expression. The write-up is still being revised, so the reported numbers may change.</p>
   </article>
 </section>
 
@@ -61,7 +60,7 @@
     <dt>LLMs</dt><dd>Post-training, pre-training, agentic systems, evaluation and benchmarking, LoRA, vLLM, verl, Hugging Face, Weights &amp; Biases</dd>
     <dt>Software</dt><dd>Git, testing, CI/CD, versioning, API design</dd>
     <dt>Infrastructure</dt><dd>Linux, Docker, Kubernetes, Ray, Redis, Apache Spark, AWS, Azure, Vast.ai, MLOps, ETL, multi-GPU training and inference</dd>
-    <dt>Spoken</dt><dd>English, Chinese</dd>
+    <dt>Spoken languages</dt><dd>English, Chinese</dd>
   </dl>
 </section>
 
