@@ -13,8 +13,8 @@
     <p class="subtitle">Oxford MPhys and former quantitative researcher.</p>
     <nav>
       <a href="#about">About</a>
-      <a href="#research">Research</a>
-      <a href="#projects">Projects</a>
+      <a href="#research">Research Projects</a>
+      <a href="#projects">Other Projects</a>
       <a href="#skills">Skills</a>
     </nav>
   </div>
@@ -25,18 +25,11 @@
 <section id="about">
   <h2>About</h2>
   <p>I graduated from the University of Oxford in 2023 with a four-year integrated Master of Physics (MPhys), then worked in quantitative research, building and deploying machine-learning trading algorithms.</p>
-  <p>My recent projects examine red-teaming, the side effects of post-training, and patterns in the mathematical operators used in physics equations. Feedback and comments are welcome.</p>
+  <p>My recent projects examine the side effects of post-training, patterns in the mathematical operators used in physics equations, and red-teaming. Feedback and comments are welcome.</p>
 </section>
 
 <section id="research">
-  <h2>Research</h2>
-
-  <article class="project">
-    <h3>CoT Injection: red-teaming Muse Glimmer's reasoning channel</h3>
-    <p class="links"><a href="https://github.com/Jaysen-Ma/muse-cot-injection">github.com/Jaysen-Ma/muse-cot-injection</a></p>
-    <p>Muse Glimmer 30B, an open-weights reasoning model by Meta, deliberates in a private reasoning channel before it answers. I tested what happens when something other than the model (e.g. an orchestrator) writes into that channel. An auxiliary model (Gemma 4 31B-it) wrote a fabricated chain of thought in the target's own style, concluding that a harmful request could be answered, and this was injected as the model's (Muse Glimmer) own reasoning. On 200 StrongREJECT prompts, compliance rose from 0.5% with the plain prompt to 69.5% with reasoning-channel injection. The identical text pasted into an ordinary user message gave only 1.0%, so the attack depends on write access to the reasoning channel. The risk sits with systems that construct a model's reasoning.</p>
-    <p>I then trained a LoRA defence on 104 corrective examples written by the target model itself. Attack success fell to less than 1% both overall and on two held-out harm categories, from 76.3% on those categories before the defence. When harmless reasoning was injected into harmless prompts, the model answered only 7 out of 20, so part of that drop reflects a reflex against any injected reasoning. Training the LoRA on mixed data rather than refusal-only data could improve this.</p>
-  </article>
+  <h2>Research Projects</h2>
 
   <article class="project">
     <h3>What post-training changes: reasoning gains and safety side effects of ES vs RL</h3>
@@ -52,17 +45,25 @@
     <p>Building on earlier work on exponential operator-frequency distributions, I revisit the lower fitted decay rate found in inflationary models and explore variation across physics branches. The study combines expanded equation collections, comparisons with modified-gravity models, bootstrap uncertainty estimates and sensitivity analyses. It also examines the relationship between decay rate and complexity for individual expressions.</p>
     <p>The longer-term aim is to turn these patterns into domain-dependent priors or structural penalties that could help symbolic regression search more efficiently for equations that explain the data. The current work explores the statistical patterns and their limitations; their usefulness for improving equation recovery remains to be tested.</p>
   </article>
+
   <article class="project">
     <h3>New inflationary potentials with evolutionary algorithms</h3>
     <p class="links">MPhys thesis, University of Oxford</p>
     <p>I searched for new models of cosmic inflation with evolutionary algorithms. I generated candidate functional forms for the inflationary potential and used genetic algorithms to search each form's coefficient space, finding a viable class that combines natural and arctan inflation (viable meaning its predictions are consistent with cosmological observations). I then studied the structure of its viable parameter bands and their predictions.</p>
     <p>Next, I applied exhaustive symbolic regression to a viable potential to generate new functional forms with similar shapes. Searching their coefficient spaces turned up further viable inflationary potentials.</p>
   </article>
+
+  <article class="project">
+    <h3>CoT Injection: red-teaming Muse Glimmer's reasoning channel</h3>
+    <p class="links"><a href="https://github.com/Jaysen-Ma/muse-cot-injection">github.com/Jaysen-Ma/muse-cot-injection</a></p>
+    <p>Muse Glimmer 30B, an open-weights reasoning model by Meta, deliberates in a private reasoning channel before it answers. I tested what happens when something other than the model (e.g. an orchestrator) writes into that channel. An auxiliary model (Gemma 4 31B-it) wrote a fabricated chain of thought in the target's own style, concluding that a harmful request could be answered, and this was injected as the model's (Muse Glimmer) own reasoning. On 200 StrongREJECT prompts, compliance rose from 0.5% with the plain prompt to 69.5% with reasoning-channel injection. The identical text pasted into an ordinary user message gave only 1.0%, so the attack depends on write access to the reasoning channel. The risk sits with systems that construct a model's reasoning.</p>
+    <p>I then trained a LoRA defence on 104 corrective examples written by the target model itself. Attack success fell to less than 1% both overall and on two held-out harm categories, from 76.3% on those categories before the defence. When harmless reasoning was injected into harmless prompts, the model answered only 7 out of 20, so part of that drop reflects a reflex against any injected reasoning. Training the LoRA on mixed data rather than refusal-only data could improve this.</p>
+  </article>
 </section>
 
 
 <section id="projects">
-  <h2>Projects</h2>
+  <h2>Other Projects</h2>
   <article class="project">
     <h3>Kaggriculture</h3>
     <p class="links">Kaggle simulation competition, bronze medal</p>
